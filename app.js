@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-const token = '';
+const token = process.env.BOT_TOKEN;
 
 if (token === undefined) {
   throw new Error('BOT_TOKEN must be provided!')
