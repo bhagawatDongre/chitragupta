@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prod": "BOT_TOKEN=1705714421:AAGmDZ7FELXtn-tNuNBnuzPHeD8TnYlGBwU node ./bin/www",
-    "start": "BOT_TOKEN=1705714421:AAGmDZ7FELXtn-tNuNBnuzPHeD8TnYlGBwU nodemon ./bin/www"
+    "prod": "node ./bin/www",
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
