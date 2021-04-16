@@ -41,8 +41,7 @@ const bot = new Telegraf(token)
 
 // Set the bot response
 bot.on('text', (ctx) => {
-  // Using context shortcut
-  ctx.reply(`Hello Bhagawat`)
+  ctx.reply(`Hello ${ctx.message.from.first_name}`)
 });
 
 // error handler
