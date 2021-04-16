@@ -6,6 +6,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var { Telegraf } = require('telegraf');
+var { JsonDB } = require('node-json-db');
+var { Config } = require('node-json-db/dist/lib/JsonDBConfig')
+
+const db = new JsonDB(new Config("items", true, false, '/'));
 
 var app = express();
 
@@ -41,7 +45,7 @@ const bot = new Telegraf(token)
 
 // Set the bot response
 bot.on('text', (ctx) => {
-  ctx.reply(`Hello ${ctx.message.from.first_name}`)
+  ctx.reply(`Hello ${ctx.message.from.first_name} ${db.getData("/test1")}`);
 });
 
 // error handler
