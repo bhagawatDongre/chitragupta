@@ -45,7 +45,36 @@ const bot = new Telegraf(token)
 
 // Set the bot response
 bot.on('text', (ctx) => {
-  ctx.reply(`Hello ${ctx.message.from.first_name} ${db.getData("/test1")}`);
+  let text = ctx.message.text;
+  formatData = (data)=> {
+    if(Array.isArray(data)){
+      return db.getData(`/${ctx.message.from.id}`).map((a)=> {
+        return a.msg
+      }).join(',')
+    } else {
+      return ''
+    }
+  }
+  switch(text){
+    case '/list':
+      return ctx.reply(`Here is your list ${formatData(db.getData(`/${ctx.message.from.id}`))}`);
+      break;
+    default:
+      db.push(
+        `/${ctx.message.from.id}[]`, 
+        {
+          id: ctx.message.message_id, 
+          msg: ctx.message.text,
+          category: ctx.message.text && Array.isArray(ctx.message.text.match(/#[a-z]+/gi))
+           ? ctx.message.text.match(/#[a-z]+/gi).join(' ') 
+           :
+            ''
+        },
+        true
+      )
+    break;
+  }
+
 });
 
 // error handler
