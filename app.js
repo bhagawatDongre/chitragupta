@@ -72,6 +72,7 @@ bot.on('text', (ctx) => {
         },
         true
       )
+      ctx.reply("\u{2705}");
     break;
   }
 
