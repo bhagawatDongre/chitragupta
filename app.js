@@ -57,7 +57,8 @@ bot.on('text', (ctx) => {
   }
   switch(text){
     case '/list':
-      return ctx.reply(`Here is your list ${formatData(db.getData(`/${ctx.message.from.id}`))}`);
+      let a = 'Here is your list' + formatData(db.getData(`/${ctx.message.from.id}`));
+      ctx.replyWithHTML(`<b>${a}</b>`);
       break;
     default:
       db.push(
