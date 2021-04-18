@@ -43,21 +43,45 @@ if (token === undefined) {
 
 const bot = new Telegraf(token)
 
+function groupBy(key, array) {
+  var result = [];
+  for (var i = 0; i < array.length; i++) {
+    var added = false;
+    for (var j = 0; j < result.length; j++) {
+      if (result[j][key] == array[i][key]) {
+        result[j].items.push(array[i]);
+        added = true;
+        break;
+      }
+    }
+    if (!added) {
+      var entry = {items: []};
+      entry[key] = array[i][key];
+      entry.items.push(array[i]);
+      result.push(entry);
+    }
+  }
+  return result;
+}
+
+bot.start((ctx) => ctx.reply('Welcome'))
+
 // Set the bot response
 bot.on('text', (ctx) => {
   let text = ctx.message.text;
+
   formatData = (data)=> {
     if(Array.isArray(data)){
-      return db.getData(`/${ctx.message.from.id}`).map((a)=> {
-        return a.msg
-      }).join(',')
+      let groupedData = groupBy('category' , data);
+
+     return groupedData.map((elem)=>elem.category || 'Uncategorized').join(', ')
     } else {
       return ''
     }
   }
   switch(text){
     case '/list':
-      let a = 'Here is your list' + formatData(db.getData(`/${ctx.message.from.id}`));
+      let a = formatData(db.getData(`/${ctx.message.from.id}`));
       ctx.replyWithHTML(`<b>${a}</b>`);
       break;
     default:
