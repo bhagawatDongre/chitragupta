@@ -74,7 +74,17 @@ bot.on('text', (ctx) => {
     if(Array.isArray(data)){
       let groupedData = groupBy('category' , data);
 
-     return groupedData.map((elem)=>elem.category || 'Uncategorized').join(', ')
+     return groupedData.map((elem)=>{
+        var str = `<b>${elem.category || '#Uncategorized'}</b>`;
+
+        str += '<pre>';
+        elem.items.map((li)=>{
+          str += ` <code>${li.msg}</code>\n`;
+        });
+        str += '</pre>';
+
+        return str;
+      }).join(' ')
     } else {
       return ''
     }
@@ -82,6 +92,7 @@ bot.on('text', (ctx) => {
   switch(text){
     case '/list':
       let a = formatData(db.getData(`/${ctx.message.from.id}`));
+      console.log(a);
       ctx.replyWithHTML(`<b>${a}</b>`);
       break;
     default:
