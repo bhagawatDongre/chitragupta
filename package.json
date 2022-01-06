@@ -5,7 +5,7 @@
   "scripts": {
     "prod": "node ./bin/www",
     "start": "node ./bin/www",
-    "dev": "BOT_TOKEN=1705714421:AAGmDZ7FELXtn-tNuNBnuzPHeD8TnYlGBwU node ./bin/www"
+    "dev": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
